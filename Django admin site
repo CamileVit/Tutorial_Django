@@ -20,4 +20,16 @@ python manage.py runserver
 
 http://127.0.0.1:8000/admin/
 
+#Crie Classes ModelAdmin Personalizadas
 
+from django.contrib import admin
+from .models import Author, Book, BookInstance
+
+class AuthorAdmin(admin.ModelAdmin):
+    pass
+
+class BookAdmin(admin.ModelAdmin):
+    pass
+
+class BookInstanceAdmin(admin.ModelAdmin):
+    pass
