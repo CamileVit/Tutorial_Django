@@ -1,1 +1,11 @@
-....
+#Registrando modelos
+
+from django.contrib import admin # importando modelos 
+from .models import Author, Genre, Book, BookInstance
+
+admin.site.register(Book)
+admin.site.register(Author)
+admin.site.register(Genre)
+admin.site.register(BookInstance)
+
+python manage.py runserver
