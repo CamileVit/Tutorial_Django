@@ -9,3 +9,13 @@ admin.site.register(BookInstance)
 
 #Executando o servidor de desenvolvimento Django
 python manage.py runserver
+
+#criando um super usuário
+
+python manage.py createsuperuser
+
+python manage.py runserver
+
+#acesso ao navegador 
+
+http://127.0.0.1:8000/admin/
