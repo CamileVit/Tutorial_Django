@@ -1,11 +1,13 @@
 #Registrando modelos
 
-from django.contrib import admin # importando modelos 
-from .models import Author, Genre, Book, BookInstance
+from django.contrib import admin  # importando modelos 
+from .models import Author, Genre, Book, BookInstance # Adicionar as importações aos modelos
 
+#Registrando os modelos no site 
 admin.site.register(Book)
 admin.site.register(Author)
 admin.site.register(Genre)
 admin.site.register(BookInstance)
 
+#Executando o servidor de desenvolvimento Django
 python manage.py runserver
