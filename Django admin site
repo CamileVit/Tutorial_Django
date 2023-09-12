@@ -20,6 +20,36 @@ python manage.py runserver
 
 http://127.0.0.1:8000/admin/
 
+#registrando uma classe modeladmin
+
+#Js
+# admin.site.register(Author)
+
+
+class AuthorAdmin(admin.ModelAdmin):
+    pass
+
+#js
+# admin.site.register(Book)
+# admin.site.register(BookInstance)
+
+#Cadastro da classes Admin para Book usando o decorador
+
+class BookAdmin(admin.ModelAdmin):
+    pass
+
+# Registro das classes Admin para BookInstance usando o decorador
+
+class BookInstanceAdmin(admin.ModelAdmin):
+    pass
+
+#adicionando list filters
+
+class BookInstanceAdmin(admin.ModelAdmin):
+    list_filter = ('status', 'due_back')
+
+
+
 #Crie Classes ModelAdmin Personalizadas
 
 from django.contrib import admin
@@ -33,3 +63,32 @@ class BookAdmin(admin.ModelAdmin):
 
 class BookInstanceAdmin(admin.ModelAdmin):
     pass
+
+#Controlando quais campos são exibidos
+
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ('last_name', 'first_name', 'date_of_birth', 'date_of_death')
+    fields = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]
+
+#Selecionando a detail view
+
+class BookInstanceAdmin(admin.ModelAdmin):
+    list_filter = ('status', 'due_back')
+
+    fieldsets = (
+        (None, {
+            'fields': ('book', 'imprint', 'id')
+        }),
+        ('Availability', {
+            'fields': ('status', 'due_back')
+        }),
+
+#Edição inline de registros associados
+
+class BooksInstanceInline(admin.TabularInline):
+    model = BookInstance
+
+@admin.register(Book)
+class BookAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'display_genre')
+    inlines = [BooksInstanceInline]
