@@ -1,39 +1,13 @@
-mkdir django_projects
-cd django_projects
-python -m venv venv
-python3 -m venv venv
-source venv/bin/activate 
+mkdir locallibrary
+cd locallibrary
 
-#Criando o projeto Django e o aplicativo catálogo
 django-admin startproject locallibrary
 cd locallibrary
-python manage.py startapp catalog
 
-#Definir as configurações do projeto 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'catalog',
-]
-
-TIME_ZONE = 'America/Sao_Paulo'
-
-from django.views.generic import RedirectView
-urlpatterns = [
-    path('', RedirectView.as_view(url='/catalog/')),
-]
-
-#Definir os padrões de URL do aplicativo de catálogo
-from django.urls import path
-from catalog import views
-
-urlpatterns = [
-    path('', views.index, name='index'),
-    path('books/', views.book_list, name='book_list'),
-]
-
-python manage.py runserver
+locallibrary/
+    manage.py
+    locallibrary/
+        __init__.py
+        settings.py
+        urls.py
+        wsgi.py
