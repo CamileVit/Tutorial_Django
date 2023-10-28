@@ -1,0 +1,14 @@
+python3 manage.py startapp catalog
+
+locallibrary/
+    manage.py
+    locallibrary/
+    catalog/
+        admin.py
+        apps.py
+        models.py
+        tests.py
+        views.py
+        __init__.py
+        migrations/
+
