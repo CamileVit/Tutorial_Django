@@ -1,0 +1,12 @@
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+python3 manage.py runserver
+
+ Performing system checks...
+
+ System check identified no issues (0 silenced).
+ August 15, 2018 - 16:11:26
+ Django version 2.1, using settings 'locallibrary.settings'
+ Starting development server at http://127.0.0.1:8000/
+ Quit the server with CTRL-BREAK.
