@@ -1,0 +1,19 @@
+
+# admin.site.register(Author)
+
+# Define a classe admin
+class AuthorAdmin(admin.ModelAdmin):
+    pass
+
+#Registro da classe admin com o modelo associado
+admin.site.register(Author, AuthorAdmin)
+
+# Registro das classes Admin para Book usando o decorator
+@admin.register(Book)
+class BookAdmin(admin.ModelAdmin):
+    pass
+
+# Registro das classes Admin para BookInstance usando o decorator
+@admin.register(BookInstance)
+class BookInstanceAdmin(admin.ModelAdmin):
+    pass
