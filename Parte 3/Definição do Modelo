@@ -1,0 +1,13 @@
+my_field_name = models.CharField(max_length=20, help_text='Enter field documentation')
+
+class Meta:
+  ordering = ['title', '-pubdate']
+verbose_name = 'BetterName'
+
+def __str__(self):
+    return self.field_name
+
+def get_absolute_url(self):
+    """Retorna o URL para acessar uma instância específica do modelo."""
+    return reverse('model-detail-view', args=[str(self.id)])
+
