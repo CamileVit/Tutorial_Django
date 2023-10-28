@@ -1,0 +1,15 @@
+#Mapeamento de URl
+
+urlpatterns += [
+    path('catalog/', include('catalog.urls')),
+] 
+
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+
+#html
+
+<a href="{% url 'index' %}">Home</a>.
+
+
