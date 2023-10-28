@@ -1,0 +1,15 @@
+record = MyModelName(my_field_name="Instance #1")
+record.save()
+print(record.id) 
+print(record.my_field_name)
+
+record.my_field_name = "New Instance Name"
+record.save()
+all_books = Book.objects.all()
+
+wild_books = Book.objects.filter(title__contains='wild')
+number_wild_books = Book.objects.filter(title__contains='wild').count()
+
+books_containing_genre = Book.objects.filter(genre__name__icontains='fiction')
+
+
