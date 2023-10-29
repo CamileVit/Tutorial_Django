@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 #cadastros dos modelos
-
+#permite ao adm gerenciar esses registros
 from catalog.models import Author, Genre, Book, BookInstance
 
 admin.site.register(Book)
