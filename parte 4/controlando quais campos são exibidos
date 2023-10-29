@@ -21,6 +21,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
     )
 
 # Edição inline de registros associados
+#Essas configurações permitem uma visão detalhada e organizada na interface administrativa do Django.
 
 class BooksInstanceInline(admin.TabularInline):
     model = BookInstance
