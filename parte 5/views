@@ -1,4 +1,6 @@
 # Criação das views
+#view coleta dados do banco de dados por meio dos modelos do Django, contabiliza informações importantes
+sobre livros, instâncias de livros e autores, e então passa esses dados para o template 
 
 from django.shortcuts import render
 
