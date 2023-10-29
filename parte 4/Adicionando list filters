@@ -1,5 +1,5 @@
-# Esses filtros permitem que o administrador possa filtrar facilmente os objetos do modelo BookInstance por seu status e a data prevista
-de retorno (due_back) na interface administrativa do Django.
+# Esses filtros permitem que o administrador possa filtrar facilmente os objetos do modelo BookInstance por seu status 
+e a data prevista de retorno (due_back) na interface administrativa do Django.
 
 class BookInstanceAdmin(admin.ModelAdmin):
     list_filter = ('status', 'due_back')
