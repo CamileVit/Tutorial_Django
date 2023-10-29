@@ -1,3 +1,5 @@
+#Exibe informações dinâmicas, como o número de livros, cópias, cópias disponíveis e autores.
+
 {% extends "base_generic.html" %}
 
 {% block content %}
@@ -16,18 +18,19 @@
   </ul>
 {% endblock %}
 
-
+#dicionário contendo chaves ('num_books', 'num_instances', etc.) associadas a valores.
 context = {
     'num_books': num_books,
     'num_instances': num_instances,
     'num_instances_available': num_instances_available,
     'num_authors': num_authors,
 }
-
+#O contexto é passado para o template utilizando a função render. Isso injeta os valores dinâmicos no template antes de ser exibido.
 return render(request, 'index.html', context=context)
 
 
 #Referenciando arquivos estáticos nos templates
+#A tag {% static %} é usada para carregar arquivos estáticos (como CSS, imagens) no template.
 
 <!-- Add additional CSS in static file -->
 {% load static %}
@@ -42,5 +45,6 @@ return render(request, 'index.html', context=context)
   alt="UML diagram"
   style="width:555px;height:540px;" />
 
-
+#Esses códigos ilustram a construção de um template dinâmico no Django, passando valores dinâmicos por meio de um
+contexto e referenciando arquivos estáticos, como CSS e imagens, para serem exibidos na página.
 
