@@ -1,39 +1,56 @@
-from django.contrib import admin
-from django.urls import path
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-]
-
+# Importa a função 'include' e o objeto 'path' do módulo 'django.urls'
 
 from django.conf.urls import include
 from django.urls import path
 
+# Adiciona uma nova rota à lista existente chamada 'urlpatterns'
 urlpatterns += [
+    # Define uma rota com o padrão 'catalog/', que inclui as rotas do aplicativo 'catalog.urls'
     path('catalog/', include('catalog.urls')),
 ]
 
+#Importa a classe RedirectView do módulo django.views.generic
 from django.views.generic import RedirectView
+
+# Adiciona uma nova rota à lista existente chamada 'urlpatterns'
 urlpatterns += [
+    # Define uma rota vazia (''), que será redirecionada para '/catalog/' usando RedirectView
     path('', RedirectView.as_view(url='/catalog/')),
 ]
 
-System check identified some issues:
-
-WARNINGS:
-?: (urls.W002) Your URL pattern '/' has a route beginning with a '/'.
-Remove this slash as it is unnecessary.
-If this pattern is targeted in an include(), ensure the include() pattern has a trailing '/'.
-
+# Importa as configurações do Django e as funções relacionadas aos arquivos estáticos
 from django.conf import settings
 from django.conf.urls.static import static
 
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# Adiciona uma nova rota à lista existente chamada 'urlpatterns'
+urlpatterns += [
+# Configuração para servir arquivos estáticos durante o desenvolvimento
+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
 
-from django.urls import path
-from catalog import views
+from django.urls import path #Importa a função path do módulo django.urls
+from catalog import views #Importa o módulo views do aplicativo catalog 
 
 
 urlpatterns = [
+    # Página inicial do catálogo
+    path('', views.index, name='index'),
 
+    # Página que lista todos os livros
+    path('books/', views.book_list, name='book_list'),
+
+    # Detalhes de um livro específico (usando um parâmetro na URL)
+    path('books/<int:book_id>/', views.book_detail, name='book_detail'),
+
+    # Página que lista todos os autores
+    path('authors/', views.author_list, name='author_list'),
+
+    # Detalhes de um autor específico (usando um parâmetro na URL)
+    path('authors/<int:author_id>/', views.author_detail, name='author_detail'),
+
+    # Página que lista todos os gêneros
+    path('genres/', views.genre_list, name='genre_list'),
+
+    # Detalhes de um gênero específico (usando um parâmetro na URL)
+    path('genres/<int:genre_id>/', views.genre_detail, name='genre_detail'),
 ]
