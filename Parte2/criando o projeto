@@ -1,13 +1,5 @@
-mkdir locallibrary
-cd locallibrary
+mkdir locallibrary # Cria um diretório chamado locallibrary
+cd locallibrary #Entra no diretório locallibrary
 
-django-admin startproject locallibrary
-cd locallibrary
-
-locallibrary/
-    manage.py
-    locallibrary/
-        __init__.py
-        settings.py
-        urls.py
-        wsgi.py
+django-admin startproject locallibrary # Usa o comando django-admin para iniciar um novo projeto chamado locallibrary
+cd locallibrary # Entra no diretório recém-criado chamado locallibrary
