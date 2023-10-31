@@ -1,89 +1,101 @@
 from django.db import models
 
-class Genre(models.Model):
-    """Model representing a book genre."""
-    name = models.CharField(max_length=200, help_text='Enter a book genre (e.g. Science Fiction)')
+# Definição do modelo Django para representar gêneros de livros
+class Genero(models.Model):
+    """Modelo que representa um gênero de livro."""
 
+    # Campo para armazenar o nome do gênero, com no máximo 200 caracteres
+    nome = models.CharField(max_length=200, help_text='Insira um gênero de livro (por exemplo, Ficção Científica)')
+
+    # Método para obter uma representação em string do objeto
     def __str__(self):
-        """String for representing the Model object."""
-        return self.name
+        """String para representar o objeto do modelo."""
+        return self.nome
 
+#book model
+from django.urls import reverse  # Usado para gerar URLs invertendo os padrões de URL
+from django.db import models
 
-from django.urls import reverse # Used to generate URLs by reversing the URL patterns
-
-class Book(models.Model):
-    """Model representing a book (but not a specific copy of a book)."""
+class Livro(models.Model):
+    """Modelo que representa um livro (mas não uma cópia específica de um livro)."""
     title = models.CharField(max_length=200)
 
-    # Foreign Key used because book can only have one author, but authors can have multiple books
-    # Author as a string rather than object because it hasn't been declared yet in the file
+    # Chave Estrangeira usada porque um livro pode ter apenas um autor, mas autores podem ter vários livros
+    # Autor como uma string em vez de objeto porque ainda não foi declarado no arquivo
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
 
-    summary = models.TextField(max_length=1000, help_text='Enter a brief description of the book')
-    isbn = models.CharField('ISBN', max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
+    summary = models.TextField(max_length=1000, help_text='Insira uma breve descrição do livro')
+    isbn = models.CharField('ISBN', max_length=13, help_text='Número ISBN de 13 caracteres. Veja mais em <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
 
-    # ManyToManyField used because genre can contain many books. Books can cover many genres.
-    # Genre class has already been defined so we can specify the object above.
-    genre = models.ManyToManyField(Genre, help_text='Select a genre for this book')
+    # ManyToManyField usado porque um gênero pode conter muitos livros. Livros podem cobrir muitos gêneros.
+    # A classe Genre já foi definida, então podemos especificar o objeto acima.
+    genero = models.ManyToManyField(Genre, help_text='Selecione um gênero para este livro')
 
     def __str__(self):
-        """String for representing the Model object."""
+        """String para representar o objeto do modelo."""
         return self.title
 
     def get_absolute_url(self):
-        """Returns the url to access a detail record for this book."""
-        return reverse('book-detail', args=[str(self.id)])
+        """Retorna a URL para acessar um registro detalhado para este livro."""
+        return reverse('detalhe-livro', args=[str(self.id)])
 
-import uuid # Required for unique book instances
+#BookInstance model
 
-class BookInstance(models.Model):
-    """Model representing a specific copy of a book (i.e. that can be borrowed from the library)."""
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular book across whole library')
-    book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
+import uuid  # Necessário para instâncias únicas de livros
+
+class ExemplarLivro(models.Model):
+    """Modelo que representa uma cópia específica de um livro (ou seja, que pode ser emprestada da biblioteca)."""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='ID único para esta cópia específica de livro em toda a biblioteca')
+    livro = models.ForeignKey('Livro', on_delete=models.SET_NULL, null=True)
     imprint = models.CharField(max_length=200)
     due_back = models.DateField(null=True, blank=True)
 
-    LOAN_STATUS = (
-        ('m', 'Maintenance'),
-        ('o', 'On loan'),
-        ('a', 'Available'),
-        ('r', 'Reserved'),
+    STATUS_EMPRESTIMO = (
+        ('m', 'Manutenção'),
+        ('o', 'Emprestado'),
+        ('a', 'Disponível'),
+        ('r', 'Reservado'),
     )
 
     status = models.CharField(
         max_length=1,
-        choices=LOAN_STATUS,
+        choices=STATUS_EMPRESTIMO,
         blank=True,
         default='m',
-        help_text='Book availability',
+        help_text='Disponibilidade do livro',
     )
 
     class Meta:
         ordering = ['due_back']
 
     def __str__(self):
-        """String for representing the Model object."""
-        return f'{self.id} ({self.book.title})'
+        """String para representar o objeto do modelo."""
+        return f'{self.id} ({self.livro.title})'
 
+#Author model
+
+from django.urls import reverse  # Importa a função reverse do módulo django.urls
 
 class Author(models.Model):
     """Model representing an author."""
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    date_of_birth = models.DateField(null=True, blank=True)
-    date_of_death = models.DateField('Died', null=True, blank=True)
+    first_name = models.CharField(max_length=100)  # Campo para armazenar o primeiro nome do autor
+    last_name = models.CharField(max_length=100)  # Campo para armazenar o sobrenome do autor
+    date_of_birth = models.DateField(null=True, blank=True)  # Campo para a data de nascimento do autor (pode ser nulo ou em branco)
+    date_of_death = models.DateField('Died', null=True, blank=True)  # Campo para a data de falecimento do autor (pode ser nulo ou em branco)
 
     class Meta:
-        ordering = ['last_name', 'first_name']
+        ordering = ['last_name', 'first_name']  # Define a ordem padrão de classificação para consultas do banco de dados
 
     def get_absolute_url(self):
-        """Returns the url to access a particular author instance."""
-        return reverse('author-detail', args=[str(self.id)])
+        """Returns the URL to access a particular author instance."""
+        return reverse('author-detail', args=[str(self.id)])  # Retorna o URL para acessar uma instância específica do autor
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.last_name}, {self.first_name}'
+        return f'{self.last_name}, {self.first_name}'  # Retorna uma representação em string do objeto Autor
 
+# Comando para criar arquivos de migração com base nas alterações nos modelos do Django
 python3 manage.py makemigrations
-python3 manage.py migrate
 
+# Comando para aplicar as migrações pendentes e atualizar o banco de dados de acordo com as alterações definidas nos arquivos de migração
+python3 manage.py migrate
