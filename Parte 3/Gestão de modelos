@@ -1,15 +1,31 @@
-record = MyModelName(my_field_name="Instance #1")
-record.save()
-print(record.id) 
-print(record.my_field_name)
+# Criando uma instância do modelo Livro com um valor para o campo titulo
+registro = Livro(titulo="Instância #1")
 
-record.my_field_name = "New Instance Name"
-record.save()
-all_books = Book.objects.all()
+# Salvando a instância no banco de dados
+registro.save()
 
-wild_books = Book.objects.filter(title__contains='wild')
-number_wild_books = Book.objects.filter(title__contains='wild').count()
+# Imprimindo o ID atribuído à instância após ser salva no banco de dados
+print(registro.id)
 
-books_containing_genre = Book.objects.filter(genre__name__icontains='fiction')
+# Imprimindo o valor do campo titulo na instância
+print(registro.titulo)
+
+# Atualizando o valor do campo titulo na instância existente
+registro.titulo = "Novo Nome da Instância"
+
+# Salvando a instância atualizada no banco de dados
+registro.save()
+
+# Obtendo todas as instâncias do modelo Livro
+todos_livros = Livro.objects.all()
+
+# Obtendo livros cujo título contém a palavra 'selvagem'
+livros_selvagens = Livro.objects.filter(titulo__contains='selvagem')
+
+# Obtendo a contagem de livros cujo título contém a palavra 'selvagem'
+numero_livros_selvagens = Livro.objects.filter(titulo__contains='selvagem').count()
+
+# Obtendo livros que contêm o gênero com o nome contendo 'ficção'
+livros_com_genero = Livro.objects.filter(genero__nome__icontains='ficção')
 
 
