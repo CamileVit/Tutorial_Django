@@ -1,22 +1,58 @@
-{% extends "base_generic.html" %}
+<!-- /locallibrary/catalog/templates/catalog/book_list.html -->
+
+{% extends "catalog/base_generic.html" %}
 
 {% block content %}
+  <!-- Título da página -->
   <h1>Book List</h1>
-  {% if book_list %}
-  <ul>
-    {% for book in book_list %}
-      <li>
-        <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.author}})
-      </li>
-    {% endfor %}
-  </ul>
+
+  <!-- Verifica se há livros na lista my_book_list -->
+  {% if my_book_list %}
+    <ul>
+      <!-- Loop for que itera sobre cada livro na lista -->
+      {% for book in my_book_list %}
+        <li>
+          <!-- Exibe um link para a página de detalhes do livro (usando get_absolute_url) -->
+          <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{ book.author }})
+        </li>
+      {% endfor %}
+    </ul>
+  <!-- Bloco executado se não houver livros na lista -->
   {% else %}
     <p>There are no books in the library.</p>
   {% endif %}
 {% endblock %}
 
-#python
-<li><a href="{% url 'index' %}">Home</a></li>
-<li><a href="{% url 'books' %}">All books</a></li>
-<li><a href="">All authors</a></li>
+# Atualizando o template base
+<!-- /locallibrary/catalog/templates/base_generic.html -->
 
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta tags, title, and favicon -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Local Library{% endblock %}</title>
+  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+  <!-- Navigation links -->
+  <ul>
+    <!-- Link para a página inicial -->
+    <li><a href="{% url 'index' %}">Home</a></li>
+
+    <!-- Link para a lista de todos os livros -->
+    <li><a href="{% url 'books' %}">All books</a></li>
+
+    <!-- Link para a lista de todos os autores -->
+    <li><a href="">All authors</a></li>
+  </ul>
+
+  <!-- Conteúdo específico da página (será substituído nos templates filhos) -->
+  <div id="content">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
