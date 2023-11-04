@@ -1,0 +1,26 @@
+# /locallibrary/catalog/urls.py
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),  # URL padrão para a página inicial
+    path('books/', views.BookListView.as_view(), name='books'),  # URL para listar todos os livros
+    path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),  # URL para a visualização de detalhes de um livro
+]
+
+# 1. path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'):
+#    - Define uma URL para a visualização de detalhes de um livro. O <int:pk> é um caminho convertido para um número inteiro (a chave primária do livro).
+#    - A view associada é BookDetailView.as_view(), que é uma view de detalhes genérica class-based.
+
+# 2. Código de tratamento de Http404 (para referência):
+#    - Isso mostra como você poderia implementar manualmente a lógica de tratamento de Http404 se não estivesse usando uma view de detalhes genérica class-based.
+#    - A função book_detail_view tenta obter o livro com a chave primária fornecida.
+#    - Se o livro não existir (Book.DoesNotExist), ela levanta uma exceção Http404.
+#    - Em seguida, renderiza o template 'catalog/book_detail.html' com o contexto {'book': book}.
+
+# 3. Alternativa usando get_object_or_404:
+#    - Mostra como você pode obter o mesmo resultado usando a função get_object_or_404, que é um atalho conveniente.
+#    - Obtém o livro com a chave primária fornecida usando Book como modelo.
+#    - Se o livro não existir, levanta automaticamente uma exceção Http404.
+#    - Renderiza o template 'catalog/book_detail.html' com o contexto {'book': book}.
