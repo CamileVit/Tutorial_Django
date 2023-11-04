@@ -1,4 +1,8 @@
+# /locallibrary/catalog/views.py
+
+from django.views import generic
+from .models import Book
+
 class BookListView(generic.ListView):
     model = Book
-    paginate_by = 10
-
+    paginate_by = 10  # Define a quantidade de itens por página ao usar paginação
