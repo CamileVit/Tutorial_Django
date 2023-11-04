@@ -1,20 +1,25 @@
+<!-- /locallibrary/catalog/templates/base_generic.html -->
+
 {% block content %}{% endblock %}
 
 {% block pagination %}
   {% if is_paginated %}
+    <!-- Verifica se a paginação está ativada -->
     <div class="pagination">
       <span class="page-links">
         {% if page_obj.has_previous %}
+          <!-- Adiciona link para a página anterior se existir -->
           <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
         <span class="page-current">
+          <!-- Exibe a página atual e o total de páginas -->
           Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
         </span>
         {% if page_obj.has_next %}
+          <!-- Adiciona link para a próxima página se existir -->
           <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
         {% endif %}
       </span>
     </div>
   {% endif %}
 {% endblock %}
-
