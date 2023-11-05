@@ -1,0 +1,11 @@
+# Obtém um valor de sessão com a chave 'my_car', lançando KeyError se a chave não for encontrada.
+my_car = request.session['my_car']
+
+# Obtém o valor da sessão com a chave 'my_car', usando 'mini' como valor padrão se a chave não estiver presente.
+my_car = request.session.get('my_car', 'mini')
+
+# Define o valor da sessão associado à chave 'my_car'.
+request.session['my_car'] = 'mini'
+
+# Deleta o valor da sessão associado à chave 'my_car'.
+del request.session['my_car']
