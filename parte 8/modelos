@@ -12,3 +12,15 @@ def is_overdue(self):
 
 python3 manage.py makemigrations
 python3 manage.py migrate
+
+class BookInstance(models.Model):
+    ...
+    class Meta:
+        ...
+        permissions = (("can_mark_returned", "Set book as returned"),)
+
+
+{% if perms.catalog.can_mark_returned %}
+    <!-- We can mark a BookInstance as returned. -->
+    <!-- Perhaps add code to link to a "book return" view here. -->
+{% endif %}
