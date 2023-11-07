@@ -1,0 +1,95 @@
+@admin.register(BookInstance)
+class BookInstanceAdmin(admin.ModelAdmin):
+    list_display = ('book', 'status', 'borrower', 'due_back', 'id')
+    list_filter = ('status', 'due_back')
+
+    fieldsets = (
+        (None, {
+            'fields': ('book','imprint', 'id')
+        }),
+        ('Availability', {
+            'fields': ('status', 'due_back','borrower')
+        }),
+    )
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
+    """Generic class-based view listing books on loan to current user."""
+    model = BookInstance
+    template_name ='catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+
+#URL conf para livros emprestados (emprestado)
+
+urlpatterns += [
+    path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
+]
+
+#Template para livros emprestados (emprestado)
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Borrowed books</h1>
+
+    {% if bookinstance_list %}
+    <ul>
+
+      {% for bookinst in bookinstance_list %}
+      <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'book-detail' bookinst.book.pk %}">{{bookinst.book.title}}</a> ({{ bookinst.due_back }})
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>There are no books borrowed.</p>
+    {% endif %}
+{% endblock %}
+
+#Adicione a lista na barra lateral
+
+ <ul class="sidebar-nav">
+   {% if user.is_authenticated %}
+   <li>User: {{ user.get_username }}</li>
+   <li><a href="{% url 'my-borrowed' %}">My Borrowed</a></li>
+   <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+   {% else %}
+   <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+   {% endif %}
+ </ul>
+
+#modelos
+
+class BookInstance(models.Model):
+    ...
+    class Meta:
+        ...
+        permissions = (("can_mark_returned", "Set book as returned"),)
+
+{% if perms.catalog.can_mark_returned %}
+    <!-- We can mark a BookInstance as returned. -->
+    <!-- Perhaps add code to link to a "book return" view here. -->
+{% endif %}
+
+#visualizações
+
+from django.contrib.auth.decorators import permission_required
+
+@permission_required('catalog.can_mark_returned')
+@permission_required('catalog.can_edit')
+def my_view(request):
+    ...
+
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
+class MyView(PermissionRequiredMixin, View):
+    permission_required = 'catalog.can_mark_returned'
+    # Or multiple permissions
+    permission_required = ('catalog.can_mark_returned', 'catalog.can_edit')
+    # Note that 'catalog.can_edit' is just an example
+    # the catalog application doesn't have such permission!
