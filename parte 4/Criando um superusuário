@@ -1,5 +1,0 @@
-#m superusuário é um usuário com privilégios administrativos completos sobre todo o site. Ele tem controle total sobre os dados e a 
-funcionalidade do site. 
-
-python3 manage.py createsuperuser
-
