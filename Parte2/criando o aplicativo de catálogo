@@ -1,3 +1,0 @@
-python3 manage.py startapp catalog # executar o script manage.py e cria uma nova aplicação Django chamada "catalog"
-
-#O comando startapp cria uma estrutura inicial de diretórios e arquivos para a aplicação, incluindo modelos, visualizações, URLs e outros componentes necessários para a funcionalidade da aplicação.

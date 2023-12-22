@@ -1,7 +1,0 @@
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3', #  Especifica o tipo de banco de dados que será usado.
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),# Especifica o nome do banco de dados.
-    }
-}
-

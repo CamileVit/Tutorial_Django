@@ -1,4 +1,0 @@
-python3 manage.py makemigrations #criar arquivos de migração 
-python3 manage.py migrate #criar arquivos de migração 
-
-python3 manage.py runserver # inicia o servidor de desenvolvimento do Django. 
