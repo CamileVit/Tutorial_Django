@@ -1,5 +1,0 @@
-# Atualizando informações dentro dos dados da sessão (exemplo: alterando os dados das "rodas" dentro dos dados de "my_car").
-request.session['my_car']['wheels'] = 'alloy'
-
-# Marca explicitamente a sessão como modificada para garantir que as alterações nos dados da sessão sejam salvas.
-request.session.modified = True
